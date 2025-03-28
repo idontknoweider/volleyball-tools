@@ -1,4 +1,8 @@
-let players = [];
+let players = JSON.parse(localStorage.getItem("players")) || [];
+
+function savePlayers() {
+    localStorage.setItem("players", JSON.stringify(players));
+}
 
 function addPlayer() {
     const name = document.getElementById("playerName").value.trim();
@@ -10,38 +14,73 @@ function addPlayer() {
     }
 
     players.push({ name, role });
+    savePlayers();
+    displayPlayers();
     document.getElementById("playerName").value = ""; // Clear input
 }
 
+function removePlayer(index) {
+    players.splice(index, 1);
+    savePlayers();
+    displayPlayers();
+}
+
+function displayPlayers() {
+    const playersList = document.getElementById("playersList");
+    playersList.innerHTML = "";
+    
+    players.forEach((player, index) => {
+        const playerDiv = document.createElement("div");
+        playerDiv.classList.add("draggable");
+        playerDiv.draggable = true;
+        playerDiv.ondragstart = (event) => drag(event, index);
+        playerDiv.innerHTML = `${player.name} - ${player.role} 
+            <button onclick="removePlayer(${index})">Remove</button>`;
+        playersList.appendChild(playerDiv);
+    });
+}
+
 function generateTeams() {
-    const teamA = [];
-    const teamB = [];
+    const teamA = document.getElementById("teamA");
+    const teamB = document.getElementById("teamB");
+    
+    teamA.innerHTML = "<h2>Team A</h2>";
+    teamB.innerHTML = "<h2>Team B</h2>";
 
-    // Shuffle the players randomly
-    players = players.sort(() => Math.random() - 0.5);
-
-    // Distribute players evenly into teams based on roles
-    const roles = ["spiker", "setter", "libero", "middle blocker"];
-    const roleGroups = {};
-
-    roles.forEach(role => {
-        roleGroups[role] = players.filter(player => player.role === role);
+    let shuffledPlayers = [...players].sort(() => Math.random() - 0.5);
+    
+    shuffledPlayers.forEach((player, index) => {
+        const playerDiv = document.createElement("div");
+        playerDiv.classList.add("draggable");
+        playerDiv.draggable = true;
+        playerDiv.ondragstart = (event) => drag(event, index);
+        playerDiv.id = `player-${index}`;
+        playerDiv.textContent = `${player.name} - ${player.role}`;
+        
+        if (index % 2 === 0) {
+            teamA.appendChild(playerDiv);
+        } else {
+            teamB.appendChild(playerDiv);
+        }
     });
-
-    roles.forEach(role => {
-        roleGroups[role].forEach((player, index) => {
-            if (index % 2 === 0) {
-                teamA.push(player);
-            } else {
-                teamB.push(player);
-            }
-        });
-    });
-
-    displayTeams(teamA, teamB);
 }
 
-function displayTeams(teamA, teamB) {
-    document.getElementById("teamA").innerHTML = teamA.map(p => `<li>${p.name} - ${p.role}</li>`).join("");
-    document.getElementById("teamB").innerHTML = teamB.map(p => `<li>${p.name} - ${p.role}</li>`).join("");
+function drag(event, playerId) {
+    event.dataTransfer.setData("playerId", playerId);
 }
+
+function allowDrop(event) {
+    event.preventDefault();
+}
+
+function drop(event, teamId) {
+    event.preventDefault();
+    const playerId = event.dataTransfer.getData("playerId");
+    const playerElement = document.getElementById(`player-${playerId}`);
+
+    if (playerElement) {
+        document.getElementById(teamId).appendChild(playerElement);
+    }
+}
+
+document.addEventListener("DOMContentLoaded", displayPlayers);
