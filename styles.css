@@ -1,0 +1,129 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f8f9fa;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    margin-top: 20px;
+    font-size: 24px;
+}
+
+.container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 20px;
+}
+
+/* Sections */
+.section {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    width: 30%;
+    min-width: 250px;
+    text-align: center;
+}
+
+h2 {
+    font-size: 18px;
+    border-bottom: 2px solid #f1ff11;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+/* Buttons */
+button {
+    background-color: #f1ff11;
+    color: black;
+    border: 1px solid #c0bd00;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.player-item.button-holder {
+    float: right;
+}
+
+/* Player List & Teams */
+#playerPool, #signUpList, .team {
+    padding: 10px;
+    border-radius: 5px;
+    background: #e9ecef;
+    margin-top: 10px;
+}
+
+.team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 80px;
+    width: 45%;
+    border: 2px dashed #f1ff11;
+    padding: 10px;
+}
+
+.player-item {
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 8px;
+    margin: 5px;
+    border-radius: 5px;
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.team.one {
+    width: 45%;
+    background: #ff9999;
+}
+
+.team.two {
+    width: 45%;
+    background: #9999ff;
+}
+
+.highlight {
+    background-color: #ffeb3b;
+}
+
+/* Drag-and-Drop */
+.draggable {
+    cursor: grab;
+    padding: 5px;
+    margin: 5px;
+    /* user-select: none; */
+    background-color: #f2f2f2;
+    border: 1px solid #000000;
+}
+
+.draggable:active {
+    cursor: grabbing;
+}
+
+/* Toggle */
+.toggle-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.toggle-container label {
+    font-size: 14px;
+    margin-right: 10px;
+}
