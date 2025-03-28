@@ -30,6 +30,13 @@
         .draggable:active {
             cursor: grabbing;
         }
+        .toggle-container {
+            margin: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
     </style>
 </head>
 <body>
@@ -45,6 +52,11 @@
 
     <h2>Signed-up Players</h2>
     <div id="playersList" class="player-list"></div>
+
+    <div class="toggle-container">
+        <label for="noLiberoMode">No-Libero Mode (2 Middle Blockers Per Team)</label>
+        <input type="checkbox" id="noLiberoMode">
+    </div>
 
     <button onclick="generateTeams()">Generate Teams</button>
     
